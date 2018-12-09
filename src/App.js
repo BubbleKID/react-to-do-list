@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Header from './Components/Header/Header.js';
+import SearchBar from './Components/SearchBar/SearchBar.js';
+import ListView from './Components/ListView/ListView.js';
+import AddTaskBar from './Components/AddTaskBar/AddTaskBar.js';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      taskList: ['React.js', 'Semantic-UI', 'Coffescript', 'Rails']
+    };
+    this.handleAddTask = this.handleAddTask.bind(this);
+  }
+
+  handleAddTask(taskList, value) {
+    return this.setState({
+      taskList: taskList.concat(value)
+    });
+  }
+
   render() {
+    const { taskList } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Header />
+        <SearchBar />
+        <ListView taskList={taskList} />
+        <AddTaskBar taskList={taskList} handleAddTask={this.handleAddTask} />
       </div>
     );
   }
